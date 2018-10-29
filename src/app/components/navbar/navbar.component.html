@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Cadastro de produtos</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+        <a class="nav-link" [routerLink]="['/']">Home <span></span></a>
+      </li>
+      <li class="nav-item" *ngIf="!tokenService.userSignedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+        <a class="nav-link" [routerLink]="['/sign-in']">Sign in <span></span></a>
+      </li>
+      <li class="nav-item" *ngIf="!tokenService.userSignedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+        <a class="nav-link" [routerLink]="['/register']">Registrar <span></span></a>
+      </li>
+      <li class="nav-item" *ngIf="tokenService.userSignedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+        <a class="nav-link" [routerLink]="['/profile']">Profile <span></span></a>
+      </li>
+      <li class="nav-item" *ngIf="tokenService.userSignedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
+        <a class="nav-link" [routerLink]="['/products']">Produtos <span></span></a>
+      </li>
+      <li class="nav-item" *ngIf="tokenService.userSignedIn()"><a class="nav-link" (click)="onLogoutClick()" href="javascript:void(0)">Logout</a>
+    </ul>
+  </div>
+</nav>

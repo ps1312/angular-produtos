@@ -1,0 +1,130 @@
+<div class="card card-block">
+  <div class="card-body">
+
+    <h4 class="card-title">Cadastrar categorias</h4>
+    <form (ngSubmit)="onSubmitCategory()">
+        <div class="form-group">
+          <input type="text"
+            class="form-control"
+            placeholder="jardinagem, cozinha.."
+            required
+            [(ngModel)]="categoryName"
+            name="categoryName">
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary">Cadastrar categoria</button>
+      </form>
+  </div>
+</div>
+
+<br>
+
+<div class="card card-block">
+  <div class="card-body">
+
+    <h4 class="card-title">Selecione uma categoria</h4>
+    <form>
+      <ul class="list-group">
+        <li *ngFor="let category of categoriesList" class="list-group-item d-flex justify-content-between">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="category" (click)='selectSingleCategory(category.id)'> {{category.nome}}
+          </div>
+          <div>
+            <button class="btn btn-danger mr-2" (click)='deleteCategory(category.id)'>Excluir</button>
+            <button class="btn btn-primary" (click)='downloadProductsCSV(category.id)'>Download csv</button>
+          </div>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>
+
+<br>
+
+<div *ngIf="singleCategory">
+  <div class="row">
+    <div class="card card-block col-md-6">
+      <div class="card-body">
+        <div class="row">
+          <h4 class="card-title">Listando todos os produtos</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li *ngFor="let produto of productsList" class="list-group-item">
+            <button class="btn btn-outline-info" (click)='selectSingleProduct(produto.categoria_id, produto.id); getCaracteristicsFromProduct(produto.id)'>{{produto.nome}}</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <br>
+    
+    <div class="card col-md-6">
+        <div *ngIf="singleProduct">
+          <div *ngIf=singleProduct.imagem_url>
+              <img class="card-img-top" src={{singleProduct.imagem_url}} alt="Card image cap">
+          </div>
+          <div class="card-body">
+            <h4 class="card-title mb-3">{{singleProduct.nome}}</h4>
+
+            <h6 class="mt-4">Características</h6>
+            <ul class="list-group list-group-flush">
+              <div *ngIf="caracteristicsList">
+                  <li *ngFor="let caracteristica of caracteristicsList" class="list-group-item">
+                    {{caracteristica.nome}}
+                  </li>
+              </div>
+            </ul>
+
+            <br>
+
+            <form class="form-row align-items-center" (ngSubmit)="caracteristicSubmit()">
+                <div class="col-auto">
+                  <input type="text"
+                    class="form-control"
+                    placeholder="compacto, eficiente.."
+                    required
+                    [(ngModel)]="caracteristicName"
+                    name="caracteristicName">
+                </div>
+                <button
+                  type="submit"
+                  class="btn btn-primary col-auto">Enviar</button>
+              </form>
+          </div>
+        </div>
+    
+        <div *ngIf="caracteristicsProduct">
+          </div>
+      </div>
+  </div>
+
+  <br>
+
+  <div class="card card-block">
+    <div class="card-body">
+
+      <h4 class="card-title">Cadastrar produto</h4>
+
+      <form (ngSubmit)="onSubmitProduct()">
+        <div class="form-group">
+          <label for="formGroupExampleInput">Nome do produto</label>
+          <input type="text"
+            class="form-control"
+            placeholder="Nome do produto"
+            required
+            [(ngModel)]="productName"
+            name="productName">
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Foto do produto</label>
+          <input type="file"
+            class="form-control" (change)='onFileSelected($event)'>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary">Criar</button>
+      </form>
+    </div>
+  </div>
+</div>
